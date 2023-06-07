@@ -1,0 +1,55 @@
+<h1 class="text-center" *ngIf="!productoActivo">NO HAY PRODUCTOS DESTACADOS</h1>
+<h1 class="text-center" *ngIf="productoActivo">PRODUCTOS DESTACADOS</h1>
+<hr>
+<!-- Slider -->
+<div class="container d-flex justify-content-center align-items-center" *ngIf="productoActivo">
+    <div id="carouselExampleRide" class="carousel slide col-6" data-bs-ride="true">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="card mt-4 mb-4 col-8">
+                    <div class="img-container mt-2">
+                        <img src="{{ productoActivo.imagen }}" class="custom-card-img">
+                    </div>
+                    <div class="card-body text-center">
+                        <strong>{{ productoActivo.nombre }}</strong>
+                        <hr class="mt-1 mb-1">
+                        <p class="m-0"> {{productoActivo.descripcion}}</p>
+                        <hr class="mt-1 mb-1">
+                        <p class="m-0">{{ productoActivo.stock }} unidades disponibles</p>
+                        <hr class="mt-1 mb-1">
+                        <strong>{{ productoActivo.precio | currency }}</strong>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item" *ngFor="let producto of arrayProductos.slice(1)">
+                <div class="card mt-4 mb-4 col-8">
+                    <div class="img-container mt-2">
+                        <img src="{{ producto.imagen }}" class="custom-card-img">
+                    </div>
+                    <div class="card-body text-center">
+                        <strong>{{ producto.nombre }}</strong>
+                        <hr class="mt-1 mb-1">
+                        <p class="m-0"> {{producto.descripcion}}</p>
+                        <hr class="mt-1 mb-1">
+                        <p class="m-0">{{ producto.stock }} unidades disponibles</p>
+                        <hr class="mt-1 mb-1">
+                        <strong>{{ producto.precio | currency }}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleRide" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+<!-- Slider -->
+<hr>
+<div class="container-fluid mt-4 mb-4 text-center">
+    <button class="btn btn-primary" (click)="agregarProducto()">Agregar</button>
+</div>

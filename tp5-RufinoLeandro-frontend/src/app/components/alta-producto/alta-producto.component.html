@@ -1,0 +1,76 @@
+<div class="col-12 d-flex justify-content-center align-items-center bg-dark">
+    <form class="col-6 col-md-6 p-4 bg-body-secondary" #productoForm="ngForm">
+        <h1 class="text-center">REGISTRAR PRODUCTO</h1>
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" name="nombre" required
+                [(ngModel)]="productoNuevo.nombre" #nombre="ngModel" placeholder="Ingrese el nombre del producto...">
+            <div *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)" class="alert alert-danger">
+                <div *ngIf="nombre.errors?.['required']">
+                    Nombre es requerido.
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="descripcion" class="form-label">Descripcion</label>
+            <input type="text" class="form-control" id="descripcion" name="descripcion" required
+                [(ngModel)]="productoNuevo.descripcion" #descripcion="ngModel"
+                placeholder="Ingrese la descripción del producto...">
+            <div *ngIf="descripcion.invalid && (descripcion.dirty || descripcion.touched)" class="alert alert-danger">
+                <div *ngIf="descripcion.errors?.['required']">
+                    Descripcion es requerido.
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="imagen" class="form-label">Imagen</label>
+            <input type="text" class="form-control" id="imagen" name="imagen" required
+                [(ngModel)]="productoNuevo.imagen" #imagen="ngModel"
+                placeholder="Ingrese la url de la imagen del producto...">
+            <div *ngIf="imagen.invalid && (imagen.dirty || imagen.touched)" class="alert alert-danger">
+                <div *ngIf="imagen.errors?.['required']">
+                    Imagen es requerida.
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="precio" class="form-label">Precio</label>
+            <input type="number" class="form-control" id="precio" name="precio" required
+                [(ngModel)]="productoNuevo.precio" #precio="ngModel" min="1"
+                placeholder="Ingrese el precio del producto...">
+            <div *ngIf="precio.invalid && (precio.dirty || precio.touched)" class="alert alert-danger">
+                <div *ngIf="precio.errors?.['required']">
+                    Precio es requerido.
+                </div>
+                <div *ngIf="precio.errors?.['min']">
+                    Valor inválido!
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="stock" class="form-label">Stock</label>
+            <input type="number" class="form-control" id="stock" name="stock" required [(ngModel)]="productoNuevo.stock"
+                #stock="ngModel" min="1" placeholder="Ingrese el stock del producto...">
+            <div *ngIf="stock.invalid && (stock.dirty || stock.touched)" class="alert alert-danger">
+                <div *ngIf="stock.errors?.['required']">
+                    Stock es requerido.
+                </div>
+                <div *ngIf="stock.errors?.['min']">
+                    Valor inválido!
+                </div>
+            </div>
+        </div>
+        <div class="mb-3">
+            <label for="destacado" class="form-label">Destacado</label>
+            <select class="form-select" id="destacado" name="destacado" required [(ngModel)]="productoNuevo.destacado">
+                <option [ngValue]="true">Destacado</option>
+                <option [ngValue]="false">No destacado</option>
+            </select>
+        </div>
+        <div class="container-fluid text-center">
+            <button class="btn btn-success me-3" [disabled]="productoForm.invalid"
+                (click)="guardarProducto()">Guardar</button>
+            <button class="btn btn-danger" (click)="volver()">Volver</button>
+        </div>
+    </form>
+</div>

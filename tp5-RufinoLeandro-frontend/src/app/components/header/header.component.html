@@ -1,0 +1,36 @@
+<!-- MENU RESPONSIVO-->
+<nav class="navbar navbar-expand-lg bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="">TP5</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item d-flex align-items-center" routerLinkActive="active">
+                    <a class="nav-link bi bi-laptop flex-grow-1" [routerLink]="['alta-producto/0']">Alta Producto</a>
+                </li>
+                <li class="nav-item d-flex align-items-center" routerLinkActive="active">
+                    <a class="nav-link bi bi-list-ul flex-grow-1" [routerLink]="['lista-producto']">Ver Productos</a>
+                </li>
+                <li class="nav-item d-flex align-items-center" routerLinkActive="active">
+                    <a class="nav-link bi bi-currency-exchange flex-grow-1"
+                        [routerLink]="['alta-transaccion/0']">Conversi&oacute;n</a>
+                </li>
+                <li class="nav-item d-flex align-items-center" routerLinkActive="active">
+                    <a class="nav-link bi bi-list-ul flex-grow-1" [routerLink]="['lista-transaccion']">Ver
+                        Transacciones</a>
+                </li>
+                <li class="nav-item d-flex align-items-center" routerLinkActive="active">
+                    <a class="nav-link bi bi-ticket-perforated flex-grow-1" [routerLink]="['alta-ticket/0']">Alta
+                        Ticket</a>
+                </li>
+                <li class="nav-item d-flex align-items-center" routerLinkActive="active">
+                    <a class="nav-link bi bi-list-ul flex-grow-1" [routerLink]="['lista-ticket']">Ver Tickets</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- FIN DE MENU RESPONSIVO-->

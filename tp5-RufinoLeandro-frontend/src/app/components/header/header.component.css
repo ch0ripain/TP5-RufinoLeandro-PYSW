@@ -1,0 +1,9 @@
+.nav-item.active {
+    background-color: #ffffff; 
+  }
+
+  .bi::before{
+    padding-right: 5px;
+    padding-left: 2px;
+  }
+  
