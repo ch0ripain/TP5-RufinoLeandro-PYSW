@@ -2,17 +2,9 @@ const Ticket = require('../models/ticket');
 const ticketCtrl = {};
 
 ticketCtrl.createTicket = async (req, res) => {
-    try {
-      const ticketData = {
-        precioTicket: req.body.precioTicket,
-        categoriaEspectador: req.body.categoriaEspectador,
-        fechaCompra: req.body.fechaCompra,
-        espectador: req.body.espectador // Pasar el atributo espectador como propiedad
-      };
-  
-      const ticket = new Ticket(ticketData);
+  var ticket = new Ticket(req.body);  
+  try {
       await ticket.save();
-  
       res.json({
         status: "1",
         msg: "Ticket guardado.",
@@ -26,7 +18,12 @@ ticketCtrl.createTicket = async (req, res) => {
   };
 
   ticketCtrl.getTickets = async (req,res) => {
-    var tickets = await Ticket.find().populate("espectador");
+
+    let criteria = {};
+    if(req.query.categoria != null && req.query.categoria != ""){
+      criteria.categoriaEspectador = req.query.categoria;
+    }
+    var tickets = await Ticket.find(criteria).populate("espectador");
     res.json(tickets);
   };
 
@@ -59,11 +56,6 @@ ticketCtrl.createTicket = async (req, res) => {
         msg: "Error procesando la operacion",
       });
     }
-  };
-
-  ticketCtrl.getTicketsPorEspectador = async(req,res) => {
-    var ticketsEspectador = await Ticket.find({categoriaEspectador: req.query.categoriaEspectador}); //  espectador? = e - l
-    res.json(ticketsEspectador);
   };
 
 module.exports = ticketCtrl;

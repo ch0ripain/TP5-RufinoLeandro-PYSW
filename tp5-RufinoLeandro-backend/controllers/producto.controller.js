@@ -17,9 +17,13 @@ productoCtrl.createProducto = async (req,res) => {
       }
 };
 
-//Recuperar TODOS los productos (GET)
+//Recuperar TODOS los productos (GET) y Recuperar los productos DESTACADOS (GET)
 productoCtrl.getProductos = async (req,res) => {
-    var productos = await Producto.find();
+    let criteria = {};
+    if((req.query.destacado != null) && (req.query.destacado != "")){
+      criteria.destacado = req.query.destacado;
+    }
+    var productos = await Producto.find(criteria);
     res.json(productos);
 };
 
@@ -55,12 +59,6 @@ productoCtrl.editProducto = async (req, res) => {
       });
     }
   };
-
-//Recuperar los productos DESTACADOS (GET)
-productoCtrl.getProductosDestacados = async (req,res) => {
-    var productosDestacados = await Producto.find({ destacado: true });
-    res.json(productosDestacados);
-};
 
 //Exporto el ctrl
 module.exports = productoCtrl;

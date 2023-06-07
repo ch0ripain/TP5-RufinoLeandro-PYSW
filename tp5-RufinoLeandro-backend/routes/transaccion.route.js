@@ -3,9 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 //Definir las rutas para las transacciones
-router.post("/crear",transaccionCtrl.createTransaccion);
-router.get("/listar",transaccionCtrl.getTransacciones);
-router.get("/listarPorCliente/:email",transaccionCtrl.getTransaccionesPorCliente);
-router.get("/listarPorDivisas",transaccionCtrl.getTransaccionesPorDivisas);
+router.post("/",transaccionCtrl.createTransaccion);
+router.get("/",transaccionCtrl.getTransacciones);
 
 module.exports = router;

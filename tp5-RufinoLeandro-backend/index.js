@@ -8,7 +8,8 @@ app.use(cors({origin: 'http://localhost:4200'}));
 //Cargamos el modulo de direccionamiento de rutas
 app.use('/api/producto', require('./routes/producto.route'));
 app.use('/api/transaccion', require('./routes/transaccion.route'));
-app.use('/api/teatro', require('./routes/teatro.route'));
+app.use('/api/espectador', require('./routes/espectador.route'));
+app.use('/api/ticket', require('./routes/ticket.route'));
 //setting
 app.set('port', process.env.PORT || 3000); // Puerto estandar de express
 //starting the server
