@@ -1,1 +1,65 @@
-<p>alta-ticket works!</p>
+<!-- Formulario -->
+<div class="col-12 d-flex justify-content-center align-items-center bg-dark">
+    <form class="col-6 col-md-6 p-4 bg-body-secondary" #productoForm="ngForm">
+        <h1 class="text-center" *ngIf="accion == 'new'">REGISTRAR TICKET</h1>
+        <h1 class="text-center" *ngIf="accion == 'update'">MODIFICAR TICKET</h1>
+        <div class="mb-3">
+            <label for="espectador" class="form-label">Seleccione el espectador</label>
+            <!-- Select para crear-->
+            <select class="form-select" id="espectador" name="espectador" required [(ngModel)]="ticket.espectador"
+                *ngIf="accion == 'new'">
+                <option value="{{espectador._id}}" *ngFor="let espectador of arrayEspectadores">{{espectador.email}}
+                </option>
+            </select>
+            <!-- Select para modificar-->
+            <select class="form-select" id="espectador" name="espectador" required [(ngModel)]="ticket.espectador._id"
+                *ngIf="accion == 'update'">
+                <option value="{{espectador._id}}" *ngFor="let espectador of arrayEspectadores">{{espectador.email}}
+                </option>
+            </select>
+            <p *ngIf="arrayEspectadores.length === 0" class="alert alert-danger small font-weight-bold">No hay
+                espectadores cargados.</p>
+        </div>
+
+        <div class="mb-3">
+            <label for="precioTicket" class="form-label">Precio:</label>
+            <input type="number" class="form-control" id="precioTicket" name="precioTicket" required
+                [(ngModel)]="ticket.precioTicket" #precioTicket="ngModel" min="1"
+                placeholder="Ingrese el precio del ticket..." (input)="calcularDescuento()">
+            <div *ngIf="precioTicket.invalid && (precioTicket.dirty || precioTicket.touched)"
+                class="alert alert-danger">
+                <div *ngIf="precioTicket.errors?.['required']">
+                    Precio del ticket es requerido.
+                </div>
+                <div *ngIf="precioTicket.errors?.['min']">
+                    Valor inválido!
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="categoria" class="form-label">Seleccione la categoria para filtrar</label>
+            <select id="categoria" class="form-select" name="categoria" [(ngModel)]="ticket.categoriaEspectador"
+                (change)="calcularDescuento()">
+                <option value="l">Local</option>
+                <option value="e">Extranjero</option>
+            </select>
+        </div>
+
+        <div class="mb-3" *ngIf="ticket.precioTicket">
+            <label for="precioCobrado" class="form-label">Precio Final</label>
+            <input type="text" class="form-control" id="precioCobrado" name="precioCobrado" readonly
+                [value]="ticket.precioCobrado | currency">
+        </div>
+
+        <div class="mb-3 text-center">
+            <button class="btn btn-outline-success me-4" (click)="guardarTicket()" [disabled]="productoForm.invalid"
+                *ngIf="accion == 'new'">Registrar</button>
+            <button class="btn btn-outline-success me-4" (click)="modificarTicket()" [disabled]="productoForm.invalid"
+                *ngIf="accion == 'update'">Modificar</button>
+            <button class="btn btn-outline-secondary" (click)="volver()">Ir a Lista Tickets</button>
+        </div>
+
+    </form>
+</div>
+<!-- Formulario -->

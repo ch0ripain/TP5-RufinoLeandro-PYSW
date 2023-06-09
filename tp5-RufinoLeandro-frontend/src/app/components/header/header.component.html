@@ -23,7 +23,8 @@
                         Transacciones</a>
                 </li>
                 <li class="nav-item d-flex align-items-center" routerLinkActive="active">
-                    <a class="nav-link bi bi-ticket-perforated flex-grow-1" [routerLink]="['alta-ticket/0']">Alta
+                    <a class="nav-link bi bi-ticket-perforated flex-grow-1"
+                        [ngClass]="{'active bg-light': isActiveLink()}" [routerLink]="['alta-ticket/0']">Gestión
                         Ticket</a>
                 </li>
                 <li class="nav-item d-flex align-items-center" routerLinkActive="active">

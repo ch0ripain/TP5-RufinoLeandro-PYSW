@@ -1,1 +1,90 @@
-<p>lista-transaccion works!</p>
+<div class="container">
+    <h3 class="col-12 text-center mt-2">OPCIONES DE LISTADO</h3>
+
+
+    <div class="row mb-2">
+        <div class="col-12 text-center">
+            <button class="btn btn-success me-2" (click)="listarTransacciones() ; tituloTabla = true">LISTAR TODAS LAS
+                TRANSACCIONES</button>
+            <button class="btn btn-warning" (click)="reiniciarArrayTransaccion() ; tituloTabla = false">LISTAR
+                TRANSACCIONES POR FILTRO</button>
+        </div>
+    </div>
+    <hr>
+
+    <!-- Formulario-->
+    <div class="container d-flex justify-content-center align-items-center" *ngIf="!tituloTabla">
+        <form class="col-6 p-0 bg-body-secondary" #filtroForm="ngForm">
+            <h5 class="text-center mt-2 mb-2">FILTRADO DE TRANSACCIONES</h5>
+            <div class="mb-4 ms-4 me-4">
+                <label for="monedaOrigen" class="form-label">Moneda Origen</label>
+                <input type="text" class="form-control" id="monedaOrigen" name="monedaOrigen" required
+                    [(ngModel)]="monedaOrigen" #monedaOrigenInput="ngModel"
+                    placeholder="Ingrese la moneda de origen...">
+                <div *ngIf="monedaOrigenInput.invalid && (monedaOrigenInput.dirty || monedaOrigenInput.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="monedaOrigenInput.errors?.['required']">
+                        Moneda Origen es requerida.
+                    </div>
+                </div>
+            </div>
+            <div class="mb-4 ms-4 me-4">
+                <label for="monedaDestino" class="form-label">Moneda Destino</label>
+                <input type="text" class="form-control" id="monedaDestino" name="monedaDestino" required
+                    [(ngModel)]="monedaDestino" #monedaDestinoInput="ngModel"
+                    placeholder="Ingrese la moneda de destino...">
+                <div *ngIf="monedaDestinoInput.invalid && (monedaDestinoInput.dirty || monedaDestinoInput.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="monedaDestinoInput.errors?.['required']">
+                        Moneda Destino es requerida.
+                    </div>
+                </div>
+            </div>
+            <div class="container text-center mb-2">
+                <button class="btn btn-outline-success" [disabled]="filtroForm.invalid"
+                    (click)="listarTransaccionesPorFiltro()">LISTAR POR FILTRO</button>
+            </div>
+        </form>
+    </div>
+    <!-- Formulario -->
+
+    <hr *ngIf="!tituloTabla">
+
+    <!-- No hay tickets -->
+    <div class="container" *ngIf="arrayTransacciones.length == 0">
+        <h1 class="text-center">NO HAY TRANSACCIONES PARA MOSTRAR</h1>
+    </div>
+    <!-- No hay tickets -->
+
+    <!--Tabla -->
+    <div class="container" *ngIf="arrayTransacciones.length > 0">
+        <h1 class="text-center" *ngIf="tituloTabla">TABLA DE TRANSACCIONES</h1>
+        <h1 class="text-center" *ngIf="!tituloTabla">TABLA DE TRANSACCIONES POR FILTRO</h1>
+        <table class="table table-responsive table-hover table-bordered text-center">
+            <thead class="table-success">
+                <tr>
+                    <th scope="col">Moneda Origen</th>
+                    <th scope="col">Cantidad Origen</th>
+                    <th scope="col">Moneda Destino</th>
+                    <th scope="col">Cantidad Destino</th>
+                    <th scope="col">Email Cliente</th>
+                    <th scope="col">Tasa de Conversión</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                <tr *ngFor="let transaccion of arrayTransacciones">
+                    <td>{{transaccion.monedaOrigen}}</td>
+                    <td>{{ transaccion.cantidadOrigen | currency: 'USD': 'symbol':'1.2-2' }}</td>
+                    <td>{{transaccion.monedaDestino}}</td>
+                    <td>{{transaccion.cantidadDestino | currency: 'USD': 'symbol':'1.2-2'}}</td>
+                    <td>{{transaccion.emailCliente}}</td>
+                    <td>{{ transaccion.tasaConversion | number: '1.1-3' }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="container text-center mb-2">
+            <button class="btn btn-outline-primary" (click)="volver()">Ir a la tabla de conversión</button>
+        </div>
+    </div>
+    <!--Tabla -->
+</div>

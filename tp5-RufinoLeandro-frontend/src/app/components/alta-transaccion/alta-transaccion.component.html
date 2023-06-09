@@ -1,1 +1,101 @@
-<p>alta-transaccion works!</p>
+<div class="container-fluid m-0 bg-dark-subtle">
+    <div class="row">
+        <!-- Tabla -->
+        <div class="d-none d-md-block col-md-8 p-0 bg-white">
+            <h1 class="text-center mt-2 mb-0">TABLA DE DIVISAS</h1>
+            <div class="table-responsive m-4">
+                <table class="table table-bordered text-center">
+                    <thead>
+                        <tr>
+                            <th>MONEDA</th>
+                            <th><img src="https://static.vecteezy.com/system/resources/previews/016/328/852/original/argentina-flat-rounded-flag-with-transparent-background-free-png.png"
+                                    height="30px"><br>ARS</th>
+                            <th><img src="https://cdn-icons-png.flaticon.com/512/323/323310.png?w=360"
+                                    height="30px"><br>USD</th>
+                            <th><img src="https://img.freepik.com/iconos-gratis/union-europea_318-297426.jpg"
+                                    height="30px"><br>EUR</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img src="https://static.vecteezy.com/system/resources/previews/016/328/852/original/argentina-flat-rounded-flag-with-transparent-background-free-png.png"
+                                    height="30px"><br>1 ARS</td>
+                            <td>1</td>
+                            <td>0,0047</td>
+                            <td>0,0042</td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://cdn-icons-png.flaticon.com/512/323/323310.png?w=360"
+                                    height="30px"><br>1 USD</td>
+                            <td>213.10</td>
+                            <td>1</td>
+                            <td>0.90</td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://img.freepik.com/iconos-gratis/union-europea_318-297426.jpg"
+                                    height="30px"><br>1 EUR</td>
+                            <td>236.62</td>
+                            <td>1.11</td>
+                            <td>1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- Tabla -->
+
+        <!-- Formulario -->
+        <form class="col-12 col-md-4 p-0 bg-body-secondary" #conversorForm="ngForm">
+            <h5 class="text-center mt-2 mb-2">FORMULARIO DE CONVERSI&Oacute;N</h5>
+            <div class="mb-4 ms-4 me-4">
+                <label for="email" class="form-label">Email</label>
+                <input type="text" class="form-control" id="email" name="email" required
+                    [(ngModel)]="transaccionNueva.emailCliente" #email="ngModel"
+                    placeholder="Ingrese el email del cliente...">
+                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+                    <div *ngIf="email.errors?.['required']">
+                        Email es requerido.
+                    </div>
+                </div>
+            </div>
+            <div class="mb-4 ms-4 me-4">
+                <label for="cantidad" class="form-label">Cantidad</label>
+                <input type="number" class="form-control" id="cantidad" name="cantidad" required
+                    [(ngModel)]="transaccionNueva.cantidadOrigen" #cantidadInput="ngModel" min="0"
+                    placeholder="Ingrese la cantidad a convertir..." (input)="transaccionNueva.cantidadDestino = 0">
+                <div *ngIf="cantidadInput.invalid && (cantidadInput.dirty || cantidadInput.touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="cantidadInput.errors?.['required']">
+                        Cantidad es requerida.
+                    </div>
+                    <div *ngIf="cantidadInput.errors?.['min']">
+                        Valor inválido!
+                    </div>
+                </div>
+            </div>
+            <div class="m-4">
+                <label for="origen" class="form-label">De</label>
+                <select id="origen" class="form-select" name="origen" [(ngModel)]="transaccionNueva.monedaOrigen">
+                    <option *ngFor="let divisa of arrayCodigos" value="{{divisa.symbol}}">{{ divisa.name }}</option>
+                </select>
+            </div>
+            <div class="m-4">
+                <label for="destino" class="form-label">A</label>
+                <select id="destino" class="form-select" name="destino" [(ngModel)]="transaccionNueva.monedaDestino">
+                    <option *ngFor="let divisa of arrayCodigos" value="{{divisa.symbol}}">{{ divisa.name }}</option>
+                </select>
+            </div>
+            <div class="m-4 text-center">
+                <button type="button" class="btn btn-success mb-2" [disabled]="conversorForm.invalid"
+                    (click)="obtenerConversion()">Convertir</button>
+                <div>
+                    <label for="Conversion"></label>
+                    <label for="conversion" class="form-label">Resultado de la conversi&oacute;n</label>
+                    <input type="text" class="form-control" id="conversion" name="conversion" readonly
+                        [value]="transaccionNueva.cantidadDestino | currency">
+                </div>
+            </div>
+        </form>
+        <!-- Formulario -->
+    </div>
+</div>

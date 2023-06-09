@@ -1,1 +1,125 @@
-<p>lista-ticket works!</p>
+<div class="container">
+
+    <!-- Opciones -->
+    <div class="row">
+        <div class="col-8">
+            <h3 class="text-center mt-2">OPCIONES DE LISTADO</h3>
+            <div class="row mb-2 text-center">
+                <div class="col-6">
+                    <button class="btn btn-success me-2" (click)="listarTickets() ; tituloTabla = true">LISTAR
+                        TODOS LOS
+                        TICKETS</button>
+                </div>
+                <div class="col-6">
+                    <button class="btn btn-warning" (click)="reiniciarArrayTickets() ; tituloTabla = false">LISTAR
+                        TICKETS POR
+                        CATEGORIA</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-4">
+            <h3 class="text-center mt-2">COMPRAR TICKET</h3>
+            <div class="container text-center mb-2">
+                <button class="btn btn-outline-primary" (click)="volver()">Agregar ticket</button>
+            </div>
+        </div>
+    </div>
+    <!-- Opciones -->
+
+    <hr>
+
+    <!-- Formulario-->
+    <div class="container d-flex justify-content-center align-items-center" *ngIf="!tituloTabla">
+        <form class="col-6 p-0 bg-body-secondary" #filtroForm="ngForm">
+            <h5 class="text-center mt-2 mb-2">FILTRADO DE TICKETS</h5>
+            <div class="m-4">
+                <label for="categoria" class="form-label">Seleccione la categoria para filtrar</label>
+                <select id="categoria" class="form-select" name="categoria" [(ngModel)]="categoriaFiltro">
+                    <option value="l">Local</option>
+                    <option value="e">Extranjero</option>
+                </select>
+            </div>
+            <div class="container text-center mb-2">
+                <button class="btn btn-outline-primary" (click)="listarTicketsPorCategoria()">Filtrar</button>
+            </div>
+        </form>
+    </div>
+    <!-- Formulario -->
+
+    <hr *ngIf="!tituloTabla">
+
+    <!-- No hay tickets -->
+    <div class="container" *ngIf="arrayTickets.length == 0">
+        <h1 class="text-center">NO HAY TICKETS PARA MOSTRAR</h1>
+    </div>
+    <!-- No hay tickets -->
+
+    <!--Tabla -->
+    <div class="table-responsive" *ngIf="arrayTickets.length > 0">
+        <h1 class="text-center" *ngIf="tituloTabla">TABLA DE TICKETS</h1>
+        <h1 class="text-center" *ngIf="!tituloTabla">TABLA DE TICKETS POR CATEGORIA</h1>
+        <table class="table table-hover table-bordered text-center">
+            <thead class="table-success">
+                <tr>
+                    <th scope="col">Precio Original</th>
+                    <th scope="col">Precio Cobrado</th>
+                    <th scope="col">Categoria</th>
+                    <th scope="col">Fecha de Cobro</th>
+                    <th scope="col">Datos del Espectador</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                <tr *ngFor="let ticket of arrayTickets">
+                    <td>{{ ticket.precioTicket | currency:'USD':'symbol':'1.2-2' }}</td>
+                    <td>{{ticket.precioCobrado | currency:'USD':'symbol':'1.2-2' }}</td>
+                    <td>
+                        <ng-container *ngIf="ticket.categoriaEspectador === 'e'">Extranjero</ng-container>
+                        <ng-container *ngIf="ticket.categoriaEspectador === 'l'">Local</ng-container>
+                    </td>
+                    <td>{{ ticket.fechaCompra }}</td>
+                    <td>{{ ticket.espectador.apellido }}, {{ ticket.espectador.nombre }} <br>
+                        {{ ticket.espectador.dni }} <br>
+                        {{ ticket.espectador.email}}
+                    </td>
+                    <td>
+                        <button class="btn btn-success me-2" (click)="modificarTicket(ticket)">Modificar</button>
+                        <button class="btn btn-danger" (click)="eliminarTicket(ticket._id)">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+    </div>
+    <!--Tabla -->
+
+    <!--Tabla Resumen de Venta-->
+    <div class="table-responsive" *ngIf="arrayTickets.length > 0">
+        <h1 class="text-center">RESUMEN DE VENTA</h1>
+
+        <table class="table table-responsive table-bordered border-danger-subtle text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Tipo de espectador</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Venta total</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+                <tr *ngIf="mostrarLocal">
+                    <td>Local</td>
+                    <td>{{cantidadLocal}}</td>
+                    <td>{{totalLocal | currency: 'USD': 'symbol': '1.2-2'}}</td>
+                </tr>
+                <tr *ngIf="mostrarExtranjero">
+                    <td>Extranjero</td>
+                    <td>{{cantidadExtranjero}}</td>
+                    <td>{{totalExtranjero | currency: 'USD': 'symbol': '1.2-2'}}</td>
+                </tr>
+                <tr>
+            </tbody>
+        </table>
+    </div>
+    <!--Tabla Resumen de Venta-->
+
+</div>
