@@ -5,6 +5,7 @@ const router = express.Router();
 //Defino las rutas para ticket
 router.post("/",ticketCtrl.createTicket);
 router.get("/",ticketCtrl.getTickets);
+router.get("/:id",ticketCtrl.getTicketById);
 router.delete("/:id",ticketCtrl.deleteTicket);
 router.put("/:id",ticketCtrl.editTicket);
 

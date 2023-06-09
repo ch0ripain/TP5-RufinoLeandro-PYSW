@@ -4,6 +4,7 @@ const Espectador = require('../models/espectador');
 
 const TicketSchema = new Schema({
     precioTicket: {type: Number, required: true},
+    precioCobrado: {type: Number, required: true},
     categoriaEspectador: { 
         type: String,
         required: true,

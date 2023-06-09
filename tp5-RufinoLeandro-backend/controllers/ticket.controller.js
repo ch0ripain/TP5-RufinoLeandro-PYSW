@@ -27,6 +27,11 @@ ticketCtrl.createTicket = async (req, res) => {
     res.json(tickets);
   };
 
+  ticketCtrl.getTicketById = async (req, res) => {
+      const ticket = await Ticket.findById(req.params.id).populate("espectador");
+      res.json(ticket);  
+  }
+
   ticketCtrl.deleteTicket = async (req,res) => {
     try {
         await Ticket.deleteOne({ _id: req.params.id });

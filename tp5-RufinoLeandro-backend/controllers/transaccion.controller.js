@@ -4,7 +4,7 @@ const transaccionCtrl = {}
 //Dar de alta una Transaccion(POST)
 transaccionCtrl.createTransaccion = async (req, res) => {
   var transaccion = new Transaccion(req.body);
-    transaccion.cantidadDestino = transaccion.cantidadOrigen * transaccion.tasaConversion;
+    //transaccion.cantidadDestino = transaccion.cantidadOrigen * transaccion.tasaConversion; Rapid-Api-Convert
   try {
       await transaccion.save();
       res.json({
